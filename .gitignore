@@ -1,0 +1,5 @@
+/.envs/
+/.vscode/
+/__pycache__/
+*.pdf
+*.log
