@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Shaper Tape Domino Generator - </title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/view.css') }}" media="all">
+<!--<script type="text/javascript" src="{{ url_for('static',filename='js/view.js') }}"></script>-->
+
+</head>
+<body id="main_body" >
+
+	<img id="top" src="{{ url_for('static',filename='images/top.png') }}" alt="">
+	<div id="form_container">
+
+		<h1><a></a></h1>
+		<form id="form_STDG" class="appnitro"  method="post" action=".">
+		    <div class="form_description">
+			    <h2>Printed Domino Generator</h2>
+			    <p>https://github.com/berncodes/pyDominoPDF</p>
+		    </div>
+			<ul>
+				<li class="section_break">
+			        <h3>Paper</h3>
+		        </li>
+		    <li id="li_1" >
+		        <label class="description" for="pg_Height">Height</label>
+		        <div>
+			        <input id="element_1" name="pg_Height" class="element text medium" type="number" maxlength="255" value="8.50" step="0.1" min="1"/>
+		        </div>
+		    </li>
+		    <li id="li_2" >
+		        <label class="description" for="pg_Width">Width</label>
+		        <div>
+			    <input id="element_2" name="pg_Width"" class="element text medium" type="number" maxlength="255" value="11.0" step="0.1" min="1"/>
+		        </div>
+		    </li>
+            <li id="li_3" >
+		        <label class="description" for="pg_Margin">Margin </label>
+		        <div>
+			        <input id="element_3" name="pg_Margin" class="element text medium" type="number" maxlength="255" value="0.50" step="0.05"/>
+		        </div>
+		      </li>
+		  <li id="li_7" >
+		<label class="description" for="pg_Pages">Pages</label>
+		<div>
+			<input id="element_7" name="pg_Pages" class="element text medium" type="number" maxlength="255" value="1" max="25"/>
+		</div>
+		  <li id="li_9">
+		  <label class="description" for="unit">Measurement Unit</label>
+                <input type="radio" id="unitchoice_in" name="unit" value="inch" checked>
+                <label for="unitchoice_in">Inches</label>
+
+                <input type="radio" id="unitchoice_mm" name="unit" value="mm">
+                <label for="unitchoice_mm">Millimeters</label>
+
+                <input type="radio" id="unitchoice_cm" name="unit" value="cm">
+                <label for="unitchoice_cm">Centimeters</label>
+            </li>
+		</li>		<li class="section_break">
+			<h3>Domino Options</h3>
+			<p></p>
+		</li>		<li id="li_6" >
+		<label class="description" for="doc_RowSpacing">Row Spacing </label>
+		<div>
+			<input id="element_6" name="doc_RowSpacing" class="element text medium" type="number" maxlength="255" value="2.5" step="0.1"/>
+		</div>
+		</li>
+
+		<li id="li_8" >
+		    <label class="description" for="element_8">Print Options </label>
+		    <span>
+		        <input id="element_8_1" name="chk_Random" class="element checkbox" type="checkbox"checked/>
+                <label class="choice" for="chk_Random">Randomize Domino Order</label>
+			    <input id="element_8_2" name="chk_ScaleVerify" class="element checkbox" type="checkbox"/>
+                <label class="choice" for="chk_ScaleVerify">Scale Verification</label>
+                <input id="element_8_3" name="chk_DominoValues" class="element checkbox" type="checkbox"  disabled/>
+                <label class="choice" for="chk_DominoValues">Domino Values</label>
+                <input id="element_8_4" name="chk_Margin_Bounding" class="element checkbox" type="checkbox" />
+                <label class="choice" for="chk_Margin_Bounding">Margin Bounding Box</label>
+                <input id="element_8_4" name="chk_Radius_Corners" class="element checkbox" type="checkbox" checked/>
+                <label class="choice" for="chk_Radius_Corners">Radius Corners</label>
+		</span>
+		</li>
+
+		<li id="li_10" >
+		    <label class="description" for="element_9">Scale Correction Options </label>
+		    <span>
+		    <li id="li_11" >
+		        <label class="description" for="scale_stated_X">Stated X-Value</label>
+		        <div>
+			        <input id="element_11" name="scale_stated_X" class="element text medium" type="number" maxlength="255" value="1.7" step="0.001"/>
+		        </div>
+		    </li>
+		    <li id="li_12" >
+		        <label class="description" for="scale_measured_X">Measured X-Value</label>
+		        <div>
+			        <input id="element_12" name="scale_measured_X" class="element text medium" type="number" maxlength="255" value="1.7" step="0.001"/>
+		        </div>
+		    </li>
+		    <li id="li_13" >
+		        <label class="description" for="scale_stated_Y">Stated Y-Value</label>
+		        <div>
+			        <input id="element_13" name="scale_stated_Y" class="element text medium" type="number" maxlength="255" value="0.5" step="0.001"/>
+		        </div>
+		    </li>
+		    <li id="li_14" >
+		        <label class="description" for="scale_measured_Y">Measured Y-Value</label>
+		        <div>
+			        <input id="element_14" name="scale_measured_Y" class="element text medium" type="number" maxlength="255" value="0.5" step="0.001"/>
+		        </div>
+		    </li>
+
+		</span>
+		</li>
+
+					<li class="buttons">
+			    <input type="hidden" name="form_id" value="form_STDG" />
+
+				<input id="saveForm" class="button_text" type="submit" name="submit" value="Generate" />
+		</li>
+			</ul>
+		</form>
+		<div id="footer">
+			Generated by <a href="http://www.phpform.org">pForm</a>
+		</div>
+	</div>
+	<img id="bottom" src="{{ url_for('static',filename='images/bottom.png') }}" alt="">
+	</body>
+</html>
