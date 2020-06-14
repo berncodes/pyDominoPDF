@@ -131,8 +131,6 @@ class pyDominoPDF:
         
         for py in range(2):
             for px in range(8):
-                bPlacePip = False
-
                 #First and list pip are always placed
                 #Pip 1-6 based on bitrow
                 if (px == 0) or (px == 7) or (BitRow[py][px-1] is True):
