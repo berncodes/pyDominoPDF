@@ -9,5 +9,3 @@ Requires the PyX and BitString libraries.
 ## License
 
 This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE) file for details
-
-## Dominos
