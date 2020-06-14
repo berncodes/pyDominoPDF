@@ -135,11 +135,7 @@ class pyDominoPDF:
 
                 #First and list pip are always placed
                 #Pip 1-6 based on bitrow
-                if (px in (0,7)): bPlacePip = True
-                else:
-                    if (BitRow[py][px-1] is True): bPlacePip = True
-
-                if bPlacePip is True:
+                if (px == 0) or (px == 7) or (BitRow[py][px-1] is True):
                     YCord = y + (self.Pip_Padding+(self.Pip_Radius)+((py*2)*(self.Pip_Diameter)))
                     XCord = x + (self.Pip_Padding+(self.Pip_Radius)+((px*2)*(self.Pip_Diameter)))
 
@@ -218,7 +214,7 @@ class pyDominoPDF:
         return ()
 
 if __name__ == "__main__":
-    print ("Domino Fidicual Generator for use with Shaper Origin")
+    print ("Domino Printed Fidicual Generator for use with Shaper Origin")
     testdoc = pyDominoPDF()
     testdoc.Units = "inch"
     testdoc.Page.Height = 11
