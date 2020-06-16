@@ -226,10 +226,10 @@ if __name__ == "__main__":
 
 
     #Vertical spacing of the rows, in document units
-    testdoc.RowSpacing = 0.25
+    testdoc.RowSpacing = 2.5
 
     #Randomize Domino Order (Or Not)
-    testdoc.Randomize = False
+    testdoc.Randomize = True
 
     #Radius Corners of Domino
     testdoc.RadiusCorners = True
