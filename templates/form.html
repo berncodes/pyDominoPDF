@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Shaper Tape Domino Generator - </title>
+<title>Python Based Printed Domino Generator</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/view.css') }}" media="all">
 <!--<script type="text/javascript" src="{{ url_for('static',filename='js/view.js') }}"></script>-->
 
@@ -11,12 +11,12 @@
 
 	<img id="top" src="{{ url_for('static',filename='images/top.png') }}" alt="">
 	<div id="form_container">
-
 		<h1><a></a></h1>
 		<form id="form_STDG" class="appnitro"  method="post" action=".">
 		    <div class="form_description">
 			    <h2>Printed Domino Generator</h2>
-			    <p>https://github.com/berncodes/pyDominoPDF</p>
+				<p>https://github.com/berncodes/pyDominoPDF</p>
+				<p>Build: {{ build_var }}</p>
 		    </div>
 			<ul>
 				<li class="section_break">
@@ -77,8 +77,10 @@
                 <label class="choice" for="chk_DominoValues">Domino Values</label>
                 <input id="element_8_4" name="chk_Margin_Bounding" class="element checkbox" type="checkbox" />
                 <label class="choice" for="chk_Margin_Bounding">Margin Bounding Box</label>
-                <input id="element_8_4" name="chk_Radius_Corners" class="element checkbox" type="checkbox" checked/>
-                <label class="choice" for="chk_Radius_Corners">Radius Corners</label>
+                <input id="element_8_5" name="chk_Radius_Corners" class="element checkbox" type="checkbox" checked/>
+				<label class="choice" for="chk_Radius_Corners">Radius Corners</label>
+                <input id="element_8_6" name="chk_Download" class="element checkbox" type="checkbox" checked/>
+				<label class="choice" for="chk_Download">Download File</label>
 		</span>
 		</li>
 
