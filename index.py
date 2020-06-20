@@ -2,7 +2,7 @@ __license__ = 'GNU Public License Version 3, https://www.gnu.org/licenses/gpl-3.
 __copyright__ = "Copyright (C) 2020, dev@BernCodes.com - Released under terms of the GPLv3 License"
 
 from flask import Flask, render_template, request, after_this_request, send_file
-import os.path
+import os
 from tempfile import mkstemp
 from pyDominoPDF import pyDominoPDF
 from datetime import datetime
@@ -14,7 +14,8 @@ def_Page_Width = 11
 def_Page_Margin = 0.5
 def_doc_RowSpacing = 2.5
 
-build_var = time.strftime("%Y%m%d-%H%M", time.gmtime(os.path.getmtime("index.py")))
+index_py = os.path.realpath(__file__)
+build_var = time.strftime("%Y%m%d-%H%M", time.gmtime(os.path.getmtime(index_py)))
 
 
 app = Flask(__name__)
