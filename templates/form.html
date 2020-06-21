@@ -11,12 +11,11 @@
 
 	<img id="top" src="{{ url_for('static',filename='images/top.png') }}" alt="">
 	<div id="form_container">
-		<h1><a></a></h1>
+		<h1>&nbsp;</h1>
 		<form id="form_STDG" class="appnitro"  method="post" action=".">
 		    <div class="form_description">
-			    <h2>Printed Domino Generator</h2>
+				<h2>Printed Domino Generator</h2>
 				<p>https://github.com/berncodes/pyDominoPDF</p>
-				<p>Build: {{ build_var }}</p>
 		    </div>
 			<ul>
 				<li class="section_break">
@@ -25,35 +24,35 @@
 		    <li id="li_1" >
 		        <label class="description" for="pg_Height">Height</label>
 		        <div>
-			        <input id="element_1" name="pg_Height" class="element text medium" type="number" maxlength="255" value="8.50" step="0.1" min="1"/>
+			        <input id="element_1" name="pg_Height" class="element text medium" type="number" maxlength="255" value="{{page_height}}" step="0.1" min="1"/>
 		        </div>
 		    </li>
 		    <li id="li_2" >
 		        <label class="description" for="pg_Width">Width</label>
 		        <div>
-			    <input id="element_2" name="pg_Width"" class="element text medium" type="number" maxlength="255" value="11.0" step="0.1" min="1"/>
+			    <input id="element_2" name="pg_Width"" class="element text medium" type="number" maxlength="255" value="{{page_width}}" step="0.1" min="1"/>
 		        </div>
 		    </li>
             <li id="li_3" >
 		        <label class="description" for="pg_Margin">Margin </label>
 		        <div>
-			        <input id="element_3" name="pg_Margin" class="element text medium" type="number" maxlength="255" value="0.50" step="0.05"/>
+			        <input id="element_3" name="pg_Margin" class="element text medium" type="number" maxlength="255" value="{{page_margin}}" step="0.05"/>
 		        </div>
 		      </li>
 		  <li id="li_7" >
 		<label class="description" for="pg_Pages">Pages</label>
 		<div>
-			<input id="element_7" name="pg_Pages" class="element text medium" type="number" maxlength="255" value="1" max="25"/>
+			<input id="element_7" name="pg_Pages" class="element text medium" type="number" maxlength="255" value="{{page_count}}" max="25"/>
 		</div>
 		  <li id="li_9">
 		  <label class="description" for="unit">Measurement Unit</label>
-                <input type="radio" id="unitchoice_in" name="unit" value="inch" checked>
+                <input type="radio" id="unitchoice_in" name="unit" value="inch"  {%if page_unit =='inch'%}checked{% endif%}/>
                 <label for="unitchoice_in">Inches</label>
 
-                <input type="radio" id="unitchoice_mm" name="unit" value="mm">
+                <input type="radio" id="unitchoice_mm" name="unit" value="mm" {%if page_unit =='mm'%}checked{% endif%}/>
                 <label for="unitchoice_mm">Millimeters</label>
 
-                <input type="radio" id="unitchoice_cm" name="unit" value="cm">
+                <input type="radio" id="unitchoice_cm" name="unit" value="cm" {%if page_unit =='cm'%}checked{% endif%}/>
                 <label for="unitchoice_cm">Centimeters</label>
             </li>
 		</li>		<li class="section_break">
@@ -62,25 +61,33 @@
 		</li>		<li id="li_6" >
 		<label class="description" for="doc_RowSpacing">Row Spacing </label>
 		<div>
-			<input id="element_6" name="doc_RowSpacing" class="element text medium" type="number" maxlength="255" value="2.5" step="0.1"/>
+			<input id="element_6" name="doc_RowSpacing" class="element text medium" type="number" maxlength="255" value="{{row_spacing}}" step="0.1"/>
 		</div>
 		</li>
 
 		<li id="li_8" >
 		    <label class="description" for="element_8">Print Options </label>
 		    <span>
-		        <input id="element_8_1" name="chk_Random" class="element checkbox" type="checkbox"checked/>
+		        <input id="element_8_1" name="chk_Random" class="element checkbox" type="checkbox" {%if randomize =='True'%}checked{% endif%}/>
                 <label class="choice" for="chk_Random">Randomize Domino Order</label>
-			    <input id="element_8_2" name="chk_ScaleVerify" class="element checkbox" type="checkbox"/>
+				
+				<input id="element_8_2" name="chk_ScaleVerify" class="element checkbox" type="checkbox" {%if scale_verification =='True'%}checked{% endif%} />
                 <label class="choice" for="chk_ScaleVerify">Scale Verification</label>
-                <input id="element_8_3" name="chk_DominoValues" class="element checkbox" type="checkbox"  disabled/>
+				
+				<input id="element_8_3" name="chk_DominoValues" class="element checkbox" type="checkbox"  disabled/>
                 <label class="choice" for="chk_DominoValues">Domino Values</label>
-                <input id="element_8_4" name="chk_Margin_Bounding" class="element checkbox" type="checkbox" />
+				
+				<input id="element_8_4" name="chk_Margin_Bounding" class="element checkbox" type="checkbox" {%if margin_bounding =='True'%}checked{% endif%} />
                 <label class="choice" for="chk_Margin_Bounding">Margin Bounding Box</label>
-                <input id="element_8_5" name="chk_Radius_Corners" class="element checkbox" type="checkbox" checked/>
+				
+				<input id="element_8_5" name="chk_Radius_Corners" class="element checkbox" type="checkbox" {%if radius_corners =='True'%}checked{% endif%} />
 				<label class="choice" for="chk_Radius_Corners">Radius Corners</label>
-                <input id="element_8_6" name="chk_Download" class="element checkbox" type="checkbox" checked/>
+				
+				<input id="element_8_6" name="chk_Download" class="element checkbox" type="checkbox" {%if download =='True'%}checked{% endif%} />
 				<label class="choice" for="chk_Download">Download File</label>
+				
+				<input id="element_8_7" name="chk_Remember" class="element checkbox" type="checkbox" {%if remember =='True'%}checked{% endif %} />
+				<label class="choice" for="chk_Remember">Save Values as Defaults*</label>
 		</span>
 		</li>
 
@@ -90,25 +97,25 @@
 		    <li id="li_11" >
 		        <label class="description" for="scale_stated_X">Stated X-Value</label>
 		        <div>
-			        <input id="element_11" name="scale_stated_X" class="element text medium" type="number" maxlength="255" value="1.7" step="0.001"/>
+			        <input id="element_11" name="scale_stated_X" class="element text medium" type="number" maxlength="255" value="{{x_stated}}" step="0.001"/>
 		        </div>
 		    </li>
 		    <li id="li_12" >
 		        <label class="description" for="scale_measured_X">Measured X-Value</label>
 		        <div>
-			        <input id="element_12" name="scale_measured_X" class="element text medium" type="number" maxlength="255" value="1.7" step="0.001"/>
+			        <input id="element_12" name="scale_measured_X" class="element text medium" type="number" maxlength="255" value="{{x_measured}}" step="0.001"/>
 		        </div>
 		    </li>
 		    <li id="li_13" >
 		        <label class="description" for="scale_stated_Y">Stated Y-Value</label>
 		        <div>
-			        <input id="element_13" name="scale_stated_Y" class="element text medium" type="number" maxlength="255" value="0.5" step="0.001"/>
+			        <input id="element_13" name="scale_stated_Y" class="element text medium" type="number" maxlength="255" value="{{y_stated}}" step="0.001"/>
 		        </div>
 		    </li>
 		    <li id="li_14" >
 		        <label class="description" for="scale_measured_Y">Measured Y-Value</label>
 		        <div>
-			        <input id="element_14" name="scale_measured_Y" class="element text medium" type="number" maxlength="255" value="0.5" step="0.001"/>
+			        <input id="element_14" name="scale_measured_Y" class="element text medium" type="number" maxlength="255" value="{{y_measured}}" step="0.001"/>
 		        </div>
 		    </li>
 
@@ -123,7 +130,9 @@
 			</ul>
 		</form>
 		<div id="footer">
-			Generated by <a href="http://www.phpform.org">pForm</a>
+			<p>*Saving Values As Default will save the form defaults using cookies.</p>
+			<p>Build: {{ build_var }} UTC</p>
+			<p>Generated by <a href="http://www.phpform.org">pForm</a></p>
 		</div>
 	</div>
 	<img id="bottom" src="{{ url_for('static',filename='images/bottom.png') }}" alt="">
