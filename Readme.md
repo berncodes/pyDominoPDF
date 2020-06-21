@@ -1,6 +1,6 @@
 # PyDominoPDF
 
-A simple Python script that generated printable fidicuals used by the [Shaper Origin CNC router](https://www.shapertools.com/en-us/). This project is not affiliated with Shaper Tools.
+A simple Python script that generates printable fidicuals used by the [Shaper Origin CNC router](https://www.shapertools.com/en-us/). This project is not affiliated with Shaper Tools.
 
 ## Prerequisites
 
