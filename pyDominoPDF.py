@@ -126,7 +126,6 @@ class pyDominoPDF:
         BitRow = [BitArray(6), BitArray(6)]
 
         BitRow[0] = DPips[:6] # First Row
-        BitRow[0].reverse()
         BitRow[1]= DPips[-6:] # Second Row
         
         for py in range(2):
@@ -213,12 +212,15 @@ class pyDominoPDF:
 
 if __name__ == "__main__":
     print ("Domino Printed Fidicual Generator for use with Shaper Origin")
+    print ("The default settings below will a US letter sized document consisting of all valid dominos in order.")
+    print ("Values start over at page 12.")
+
     testdoc = pyDominoPDF()
     testdoc.Units = "inch"
     testdoc.Page.Height = 11
     testdoc.Page.Width = 8.5
     testdoc.Page.Margin = 0.5
-    testdoc.Page.Count = 1
+    testdoc.Page.Count = 12
 
     #Page Scaling, 1 = 100%, unitless
     testdoc.Page.X_ScaleFactor = 1.0
@@ -226,10 +228,10 @@ if __name__ == "__main__":
 
 
     #Vertical spacing of the rows, in document units
-    testdoc.RowSpacing = 2.5
+    testdoc.RowSpacing = 0.5
 
     #Randomize Domino Order (Or Not)
-    testdoc.Randomize = True
+    testdoc.Randomize = False
 
     #Radius Corners of Domino
     testdoc.RadiusCorners = True
@@ -241,6 +243,7 @@ if __name__ == "__main__":
     date_time = datetime.now().strftime("%Y%m%d-%H%M")
     filename = ("Output-{}.pdf" . format(date_time))	 
     testdoc.SavePDF(filename)
+    print('Done.')
 
 
 
