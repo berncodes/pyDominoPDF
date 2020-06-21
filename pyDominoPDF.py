@@ -214,6 +214,8 @@ if __name__ == "__main__":
     print ("Domino Printed Fidicual Generator for use with Shaper Origin")
     print ("The default settings below will a US letter sized document consisting of all valid dominos in order.")
     print ("Values start over at page 12.")
+    print ("Currently using a domino list of {} values." . format(len(Valid_Dominos)))
+
 
     testdoc = pyDominoPDF()
     testdoc.Units = "inch"
