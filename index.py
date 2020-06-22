@@ -15,6 +15,7 @@ def_Page_Margin = 0.5
 def_doc_RowSpacing = 2.5
 cookie_max_age = 360*24*60*60
 
+
 index_py = os.path.realpath(__file__)
 build_var = time.strftime("%Y%m%d-%H%M", time.gmtime(os.path.getmtime(index_py)))
 
@@ -24,8 +25,6 @@ app = Flask(__name__)
 def index():
     if (request.method == "GET"):
         cookies = request.cookies.to_dict()
-        for kvp in (cookies):
-            print (f"Key:{kvp}      Value:{cookies[kvp]}")
         variable_list = {'build_var':build_var} 
         
         if ('remember' not in cookies): 
