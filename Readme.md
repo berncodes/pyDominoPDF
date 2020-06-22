@@ -4,13 +4,13 @@ A simple Python script that generates printable fidicuals used by the [Shaper Or
 
 ## Prerequisites
 
-pyDominoPDF
+### pyDominoPDF.py
 Local/stand-alone generator that requires the PyX and Bitstring libraries.
 
-pyDominoValueGenerator.py
+### pyDominoValueGenerator.py
 Generates a list of valid values used by pyDominoPDF. Requires the Bitstring library.
 
-index.py
+### index.py
 A flask web application for a web hosted version of pyDominoPDF.
 
 ## License
