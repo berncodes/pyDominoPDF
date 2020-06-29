@@ -32,14 +32,39 @@
 		    <li id="li_2" >
 		        <label class="description" for="pg_Width">Width</label>
 		        <div>
-			    <input id="element_2" name="pg_Width"" class="element text medium" type="number" maxlength="255" value="{{page_width}}" step="0.1" min="1"/>
+			    	<input id="element_2" name="pg_Width"" class="element text medium" type="number" maxlength="255" value="{{page_width}}" step="0.1" min="1"/>
 		        </div>
 		    </li>
-            <li id="li_3" >
-		        <label class="description" for="pg_Margin">Margin </label>
-		        <div>
-			        <input id="element_3" name="pg_Margin" class="element text medium" type="number" maxlength="255" value="{{page_margin}}" step="0.05"/>
-		        </div>
+            <li id="li_margins" >
+				<ul>
+					<div>Margins</div>
+					<li>
+						<label class="description" for="pg_margin_top">Top</label>
+						<div>
+							<input id="pg_margin_top" name="pg_margin_top"" class="element text medium" type="number" maxlength="255" value="{{page_margin_top}}" step="0.025" min="0"/>
+						</div>
+					</li>
+
+					<li>
+						<label class="description" for="pg_margin_left">Left</label>
+						<div>
+							<input id="pg_margin_left" name="pg_margin_left"" class="element text medium" type="number" maxlength="255" value="{{page_margin_left}}" step="0.025" min="0"/>
+						</div>
+					</li>
+
+					<li>
+						<label class="description" for="pg_margin_right">Right</label>
+						<div>
+							<input id="pg_margin_right" name="pg_margin_right"" class="element text medium" type="number" maxlength="255" value="{{page_margin_right}}" step="0.025" min="0"/>						</div>
+					</li>
+
+					<li>
+						<label class="description" for="pg_margin_bottom">Top</label>
+						<div>
+							<input id="pg_margin_bottom" name="pg_margin_bottom"" class="element text medium" type="number" maxlength="255" value="{{page_margin_bottom}}" step="0.025" min="0"/>
+						</div>
+					</li>
+				</ul>
 		      </li>
 		  <li id="li_7" >
 		<label class="description" for="pg_Pages">Pages</label>
@@ -57,16 +82,27 @@
                 <input type="radio" id="unitchoice_cm" name="unit" value="cm" {%if page_unit =='cm'%}checked{% endif%}/>
                 <label for="unitchoice_cm">Centimeters</label>
             </li>
-		</li>		<li class="section_break">
-			<h3>Domino Options</h3>
+		</li>
+		<li class="section_break">
+			<h3>Layout</h3>
 			<p></p>
-		</li>		<li id="li_6" >
-		<label class="description" for="doc_RowSpacing">Row Spacing </label>
-		<div>
-			<input id="element_6" name="doc_RowSpacing" class="element text medium" type="number" maxlength="255" value="{{row_spacing}}" step="0.1"/>
-		</div>
+		</li>	
+		<li id="li_6" >
+			<label class="description" for="doc_RowSpacing">Row Spacing </label>
+			<div>
+				<input id="element_6" name="doc_RowSpacing" class="element text medium" type="number" maxlength="255" value="{{row_spacing}}" step="0.1"/>
+			</div>
+
+			<input id="chk_center_vertical" name="chk_center_vertical" class="element checkbox" type="checkbox" {%if center_vertical =='True'%}checked{% endif%}/>
+			<label class="choice" for="chk_center_vertical">Center Output Vertically</label>
+				
+			<input id="chk_center_horizontal" name="chk_center_horizontal" class="element checkbox" type="checkbox" {%if center_horizontal =='True'%}checked{% endif%}/>
+            <label class="choice" for="chk_center_horizontal">Center Output Horizontally</label>
 		</li>
 
+		<li class="section_break">
+			<h3>Domino Options</h3>
+		</li>		
 		<li id="li_8" >
 		    <label class="description" for="element_8">Print Options </label>
 		    <span>

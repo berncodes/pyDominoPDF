@@ -35,7 +35,15 @@ def index():
         #Sets Defaults if not found (either not saved or not remembered)
         if ('page_height' not in variable_list) : variable_list['page_height'] = str(def_Page_Height)
         if ('page_width' not in variable_list) : variable_list['page_width'] = str(def_Page_Width)
-        if ('page_margin' not in variable_list) : variable_list['page_margin'] = str(def_Page_Margin)
+
+        if ('page_margin_top' not in variable_list) : variable_list['page_margin_top'] = str(def_Page_Margin)
+        if ('page_margin_left' not in variable_list) : variable_list['page_margin_left'] = str(def_Page_Margin)
+        if ('page_margin_right' not in variable_list) : variable_list['page_margin_right'] = str(def_Page_Margin)
+        if ('page_margin_bottom' not in variable_list) : variable_list['page_margin_bottom'] = str(def_Page_Margin)
+
+        if ('center_horizontal' not in variable_list) : variable_list['center_horizontal'] = "False"
+        if ('center_vertical' not in variable_list) : variable_list['center_vertical'] = "False"
+
         if ('page_count' not in variable_list) : variable_list['page_count'] = str(1)
         if ('page_unit' not in variable_list) : variable_list['page_unit'] = "inch"
         if ('row_spacing' not in variable_list) : variable_list['row_spacing'] = str(def_doc_RowSpacing)
@@ -66,9 +74,21 @@ def index():
         page_Width  = request.form.get('pg_Width', 0, type=float)
         output.Page.Width = (page_Width)
 
-        page_Margin = request.form.get('pg_Margin', 0, type=float)
-        if (page_Margin < 0): page_Margin = def_Page_Margin
-        output.Page.Margin = (page_Margin)
+        page_margin_top = request.form.get('pg_margin_top', 0, type=float)
+        if (page_margin_top < 0): page_margin_top = def_Page_Margin
+        output.Page.Margin.Top = (page_margin_top)
+
+        page_margin_left = request.form.get('pg_margin_left', 0, type=float)
+        if (page_margin_left < 0): page_margin_left = def_Page_Margin
+        output.Page.Margin.Left = (page_margin_left)
+
+        page_margin_right = request.form.get('pg_margin_right', 0, type=float)
+        if (page_margin_right < 0): page_margin_right = page_margin_right
+        output.Page.Margin.Right = (page_margin_right)
+
+        page_margin_bottom = request.form.get('pg_margin_bottom', 0, type=float)
+        if (page_margin_bottom < 0): page_margin_bottom = def_Page_Margin
+        output.Page.Margin.Bottom = (page_margin_bottom)
 
         doc_PageCount  = request.form.get('pg_Pages', 1, type=int)
         if (doc_PageCount > 20): doc_PageCount = 20
@@ -107,10 +127,21 @@ def index():
         else:
             bDownload = True
 
+        if (request.form.get('chk_center_vertical', '') == ''):
+            output.Page.Center_Vertical = False
+        else:
+            output.Page.Center_Vertical = True
+
+        if (request.form.get('chk_center_horizontal', '') == ''):
+            output.Page.Center_Horizontal = False
+        else:
+            output.Page.Center_Horizontal = True
+
         if (request.form.get('chk_Remember', '') == ''):
             bCookies = False
         else:
             bCookies = True
+
 
         x_measure = request.form.get('scale_measured_X', 1, type=float)
         x_stated = request.form.get('scale_stated_X', 1, type=float)
@@ -141,7 +172,15 @@ def index():
             if (bCookies == True):
                 response.set_cookie("page_height", str(page_Height), cookie_max_age)
                 response.set_cookie("page_width", str(page_Width), cookie_max_age)
-                response.set_cookie("page_margin", str(page_Margin), cookie_max_age)
+
+                response.set_cookie("page_margin_top", str(output.Page.Margin.Top), cookie_max_age)
+                response.set_cookie("page_margin_left", str(output.Page.Margin.Left), cookie_max_age)
+                response.set_cookie("page_margin_right", str(output.Page.Margin.Right), cookie_max_age)
+                response.set_cookie("page_margin_bottom", str(output.Page.Margin.Bottom), cookie_max_age)
+
+                response.set_cookie("center_vertical", str(output.Page.Center_Vertical), cookie_max_age)
+                response.set_cookie("center_horizontal", str(output.Page.Center_Horizontal), cookie_max_age)
+
                 response.set_cookie("page_count", str(doc_PageCount), cookie_max_age)
                 response.set_cookie("page_unit", str(doc_Unit), cookie_max_age)
                 response.set_cookie("row_spacing", str(doc_Rows), cookie_max_age)

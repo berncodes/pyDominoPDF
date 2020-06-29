@@ -5,16 +5,24 @@ from bitstring import BitArray
 from random import shuffle
 from pyDominoValueGenerator import Valid_Dominos
 from datetime import datetime
+from math import floor
 import pyx
 import logging
 
 
+class Margin():
+    Top = 0.0
+    Left = 0.0
+    Right = 0.0
+    Bottom = 0.0
 
 class Paper():
     Height = 0.0
     Width = 0.0
-    Margin = 0.0
+    Margin = Margin()
     Count = 0
+    Center_Vertical = False
+    Center_Horizontal = False
     X_ScaleFactor = 1.0
     Y_ScaleFactor = 1.0
 
@@ -146,9 +154,24 @@ class pyDominoPDF:
         #ValidValues = DominoValues(0,4095)
         if (self.Randomize == True): shuffle(Valid_Dominos)
 
-        pg_Num_Rows = int((self.Page.Height-(self.Page.Margin*2)-self.Domino_Height) // (self.RowSpacing+(self.Domino_Height))) # Number of Complete Rows
-        pg_Num_Cols = int((self.Page.Width-(self.Page.Margin*2)) // (self.Domino_Width+self.DominoPadding))
+        work_width = self.Page.Width-(self.Page.Margin.Left+self.Page.Margin.Right)
+        work_height = self.Page.Height-(self.Page.Margin.Top+self.Page.Margin.Bottom)
 
+        pg_Num_Rows = 1+floor((work_height-self.Domino_Height)/(self.Domino_Height+self.RowSpacing)) # Number of Complete Rows
+        pg_Num_Cols = 1+floor((work_width-self.Domino_Width)/(self.Domino_Width+self.DominoPadding))
+
+        if (self.Page.Center_Horizontal == True):
+            x_domino_space = (pg_Num_Cols*(self.Domino_Width+self.DominoPadding))-self.DominoPadding
+            x_offset = round((work_width-x_domino_space)/2, 4)
+        else:
+            x_offset = 0
+
+        if (self.Page.Center_Vertical  == True):
+            y_domino_space =  (pg_Num_Rows*(self.Domino_Height+self.RowSpacing))-self.RowSpacing
+            y_offset = round((work_height-y_domino_space)/2, 4)
+        else:
+            y_offset = 0
+        
         xPage = 0
         ValueIndex = 0
         ValueIndexMax = len(Valid_Dominos)
@@ -156,16 +179,16 @@ class pyDominoPDF:
         if (self.VerificationScale == True) :
             pyx_vsc = pyx.canvas.canvas()
             for v in range(5):
-                vsc_r =  pyx.path.rect (0+self.Page.Margin, (v*self._unit_scale)+(0.5*v*self._unit_scale)+self.Page.Margin, (5-v)*self._unit_scale, 1*self._unit_scale)
+                vsc_r =  pyx.path.rect (0+self.Page.Margin.Left, (v*self._unit_scale)+(0.5*v*self._unit_scale)+self.Page.Margin.Bottom, (5-v)*self._unit_scale, 1*self._unit_scale)
                 pyx_vsc.fill(vsc_r, [pyx.color.rgb.black])
 
-                vert_scale_x = (self.Page.Width-self.Page.Margin)-(v*self._unit_scale)-(0.5*v*self._unit_scale)-(1*self._unit_scale)
-                vert_scale_y = self.Page.Height-self.Page.Margin - (5-v)*self._unit_scale
+                vert_scale_x = (self.Page.Width-self.Page.Margin.Right)-(v*self._unit_scale)-(0.5*v*self._unit_scale)-(1*self._unit_scale)
+                vert_scale_y = self.Page.Height-self.Page.Margin.Top - (5-v)*self._unit_scale
                 vsc_r =  pyx.path.rect (vert_scale_x, vert_scale_y, 1*self._unit_scale, (5-v)*self._unit_scale)
                 logging.debug("width: {} height: {} at {},{}" . format(1*self._unit_scale, (5-v)*self._unit_scale, vert_scale_x, vert_scale_y))
                 pyx_vsc.fill(vsc_r, [pyx.color.rgb.black])
 
-            pyx_vsc_page = pyx.document.page(pyx_vsc,None, pyx.document.paperformat(self.Page.Width, self.Page.Height),0,0,0,self.Page.Margin)
+            pyx_vsc_page = pyx.document.page(pyx_vsc,None, pyx.document.paperformat(self.Page.Width, self.Page.Height),0,0,0,0)
             pyx_document.append(pyx_vsc_page)
 
 
@@ -173,29 +196,32 @@ class pyDominoPDF:
             logging.debug("Page {}" . format(xPage))
             pyx_c = pyx.canvas.canvas()
 
-            M = self.Page.Margin
-            W = self.Page.Width
-            H = self.Page.Height
             if (self.MarginBorder == True):
-                margin_rect =  pyx.path.rect (M, M, W-(2*M),H-(2*M))
+                #Margin Rectangle
+                mr_x = self.Page.Margin.Left
+                mr_y = self.Page.Margin.Bottom
+                mr_height = self.Page.Height-(self.Page.Margin.Top+self.Page.Margin.Bottom)
+                mr_width = self.Page.Width-(self.Page.Margin.Left+self.Page.Margin.Right)
+
+                margin_rect =  pyx.path.rect (mr_x, mr_y, mr_width,mr_height)
                 pyx_c.stroke(margin_rect, [pyx.color.rgb.blue])
 
-            for py in range(pg_Num_Rows+1):
+            for py in range(pg_Num_Rows):
                 for px in range(pg_Num_Cols):
-                    DX = (px * self.Domino_Width) + (px * self.DominoPadding) + self.Page.Margin
-                    DY = (py * self.RowSpacing) + (py * self.Domino_Height) + self.Page.Margin
-
+                    DX = (px * self.Domino_Width) + (px * self.DominoPadding) + self.Page.Margin.Left + x_offset
+                    DY = (py * self.RowSpacing) + (py * self.Domino_Height) + self.Page.Margin.Bottom + y_offset
+                    
                     if (ValueIndex == ValueIndexMax):
                         ValueIndex = 0
                         if (self.Randomize == True): shuffle(Valid_Dominos)
 
                     self.__place_domino(DX, DY, Valid_Dominos[ValueIndex], pyx_c)
-                    ValueIndex = ValueIndex +1
+                    ValueIndex = ValueIndex+1
 
             pyx_sc = pyx.canvas.canvas()
             
             pyx_sc.insert(pyx_c, [pyx.trafo.scale(sx=self.Page.X_ScaleFactor, sy=self.Page.Y_ScaleFactor)]) #Scale Factor Here
-            pyx_page = pyx.document.page(pyx_sc,None, pyx.document.paperformat(self.Page.Width, self.Page.Height),0,0,0,self.Page.Margin)
+            pyx_page = pyx.document.page(pyx_sc,None, pyx.document.paperformat(self.Page.Width, self.Page.Height),0,0,0,0)
             pyx_document.append(pyx_page)
 
         return ()
@@ -221,7 +247,15 @@ if __name__ == "__main__":
     testdoc.Units = "inch"
     testdoc.Page.Height = 11
     testdoc.Page.Width = 8.5
-    testdoc.Page.Margin = 0.5
+
+    testdoc.Page.Center_Vertical = True
+    testdoc.Page.Center_Horizontal = True
+
+    testdoc.Page.Margin.Top = 0.6
+    testdoc.Page.Margin.Left = 0.6
+    testdoc.Page.Margin.Right = 0.6
+    testdoc.Page.Margin.Bottom = 0.6
+    
     testdoc.Page.Count = 12
 
     #Page Scaling, 1 = 100%, unitless
@@ -238,7 +272,7 @@ if __name__ == "__main__":
     #Radius Corners of Domino
     testdoc.RadiusCorners = True
 
-    #No outline of the margin
+    #Margin Border, Useful for debugging the printable area
     testdoc.MarginBorder = False
 
     #Save PDF, YYYYMMDD-HHMM
