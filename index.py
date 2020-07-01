@@ -145,12 +145,27 @@ def index():
 
         x_measure = request.form.get('scale_measured_X', 1, type=float)
         x_stated = request.form.get('scale_stated_X', 1, type=float)
-        output.Page.X_ScaleFactor = x_stated / x_measure
+
+        if (x_measure > 0) & (x_stated > 0):
+             x_scale = x_stated / x_measure
+        else:
+            x_scale = 1.0
+
+        if (x_scale > 2): x_scale = 2
+
+        output.Page.X_ScaleFactor = x_scale
 
         y_measure = request.form.get('scale_measured_Y', 1, type=float)
         y_stated = request.form.get('scale_stated_Y', 1, type=float)
-        output.Page.Y_ScaleFactor = y_stated / y_measure
+        
+        if (y_measure > 0) & (y_stated > 0):
+             y_scale = y_stated / y_measure
+        else:
+            y_scale = 1.0
 
+        if (y_scale > 2): y_scale = 2
+
+        output.Page.Y_ScaleFactor = y_scale
 
         WDir = os.path.join(app.root_path, "output")
         temp_fd, temp_path = mkstemp(".pdf","", WDir)
